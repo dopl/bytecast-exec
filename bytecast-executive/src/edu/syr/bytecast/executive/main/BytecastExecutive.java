@@ -4,7 +4,7 @@
  */
 package edu.syr.bytecast.executive.main;
 
-import edu.syr.bytecast.executive.test.Tester;
+import edu.syr.bytecast.executive.test.RunBytecast;
 
 /**
  *
@@ -20,16 +20,16 @@ public class BytecastExecutive {
      
     public static void main(String[] args) {
         
-        Tester tester = new Tester("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "outputjar/outputjar1.jar");
-        tester.start();
+        RunBytecast m_tester = new RunBytecast("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "outputjar/outputjar1.jar");
+        m_tester.start();
         
-        if(tester.isResult())
+        if(m_tester.isResult())
         {
             System.out.println("Succesfully Created Jar");
         }
         else
             System.out.println("Failed");
         
-        System.out.println("Message" + tester.getMessage());
+        System.out.println("Message" + m_tester.getMessage());
     }        
 }
