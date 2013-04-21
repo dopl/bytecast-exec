@@ -32,28 +32,56 @@ public class Tester {
         m_testcases.add(m_testcase);
     }
     
+    private String buildCommand(String command, String[] arguments)
+    {
+        StringBuilder command1 = new StringBuilder(command);        
+        command1.append(" ");
+        for(int i = 0; i < arguments.length; i++)
+        {
+           command1.append(arguments[i]);
+           command1.append(" ");
+        }
+        return command1.toString();
+    }
+    
     public void startTest()
     {       
         for(TestCase testcase : m_testcases)
         {
             try {
-                StringBuilder command1 = new StringBuilder(testcase.getPocFile().getcommand1());
-                String[] arguments = testcase.getArguments();
-                command1.append(" ");
-                for(int i = 0; i < arguments.length; i++)
-                {
-                    command1.append(arguments[i]);
-                    command1.append(" ");
-                }
-                
-                RunProcess rp = new RunProcess();                
+                String command1 = buildCommand(testcase.getPocFile().getcommand1(), testcase.getArguments());
+                RunProcess rp = new RunProcess();
                 rp.exec(command1.toString(), new File(testcase.getPocFile().getdirectory1()));
                 testcase.setOutput1(rp.getOutput());
-                testcase.setError1(rp.getError());              
+                if(rp.getError().size() > 0)
+                    testcase.add("error", rp.getError().toString());
+                String command2 = buildCommand(testcase.getPocFile().getcommand2(), testcase.getArguments());
+                RunProcess rp1 = new RunProcess();
+                rp1.exec(command2.toString(), new File(testcase.getPocFile().getdirectory2()));
+                testcase.setOutput2(rp1.getOutput());
+                if(rp.getError().size() > 0)
+                    testcase.add("error", rp1.getError().toString());
+                if(testcase.getOutput1().size() != testcase.getOutput2().size())
+                    testcase.setResult(false);
+                else
+                {
+                    int count = 0;
+                    boolean result = true;
+                    for(String output : testcase.getOutput1())
+                    {
+                        if(!output.equals(testcase.getOutput2().get(count++)))
+                        {
+                            result = false;
+                            break;
+                        }
+                    }
+                    testcase.setResult(result);                    
+                }
+                
             } catch (IOException ex) {
-                Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+                testcase.add("error", ex.getMessage());
             } catch (InterruptedException ex) {
-                Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
+                testcase.add("error", ex.getMessage());
             }
         }
     }

@@ -4,6 +4,7 @@
  */
 package edu.syr.bytecast.executive.test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,19 +17,30 @@ public class TestCase {
     private boolean m_result;
     private List<String> m_output1;
     private List<String> m_output2;
-    private List<String> m_error1;
-    private List<String> m_error2;
+    private List<String> m_error;
     private String[] m_arguments;
     private PocFile m_pocFile;
     
     public TestCase()
     {
-        
+        m_error = new ArrayList<String>();        
+    }
+    
+    public void add(String type, String message)
+    {
+        if(type.equalsIgnoreCase("error"))
+            m_error.add(message);
+        else if(type.equalsIgnoreCase("output1"))
+            m_output1.add(message);
+        else if(type.equalsIgnoreCase("output2"))
+            m_output2.add(message);
+            
     }
     
     public TestCase(PocFile m_pocFile)
     {
         this.m_pocFile = m_pocFile;
+        m_error = new ArrayList<String>();
     }
        
     /**
@@ -89,33 +101,18 @@ public class TestCase {
     /**
      * @return the m_error1
      */
-    public List<String> getError1() {
-        return m_error1;
+    public List<String> getError() {
+        return m_error;
     }
 
     /**
      * @param m_error1 the m_error1 to set
      */
-    public void setError1(List<String> m_error1) {
-        this.m_error1 = m_error1;
+    public void setError(List<String> m_error1) {
+        this.m_error = m_error1;
     }
 
-    /**
-     * @return the m_error2
-     */
-    public List<String> getError2() {
-        return m_error2;
-    }
-
-    /**
-     * @param m_error2 the m_error2 to set
-     */
-    public void setError2(List<String> m_error2) {
-        this.m_error2 = m_error2;
-    
-    }       
-
-    /**
+     /**
      * @return the m_arguments
      */
     public String[] getArguments() {
