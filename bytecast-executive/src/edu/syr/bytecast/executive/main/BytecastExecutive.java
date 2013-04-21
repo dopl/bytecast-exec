@@ -28,13 +28,37 @@ public class BytecastExecutive {
         
         if(m_tester.isResult())
         {
-            System.out.println("Succesfully Created Class File");
+            System.out.println("Succesfully Created Class File");            
             Tester tester = new Tester();            
-            tester.addTestCase(new PocFile("./a.out", null, "../../bytecast-documents/AsciiManip01Prototype", null), new String[]{"2", "3"});
-            tester.startTest();
-            TestCase result = tester.getResults().get(0);
-            for(String output : result.getOutput1())
-                System.out.println(output);
+            PocFile pocfile = new PocFile("./a.out", "java outputclass", "../../bytecast-documents/AsciiManip01Prototype", "outputjar/outputclass.class");
+            tester.addTestCase(pocfile, new String[]{"2", "3"});
+            tester.addTestCase(pocfile, new String[]{"2", "2"});
+            tester.addTestCase(pocfile, new String[]{"4", "5"});
+            tester.addTestCase(pocfile, new String[]{"23", "122"});
+            tester.addTestCase(pocfile, new String[]{"-2", "5"});
+            
+            tester.startTest();            
+            int testCount = 0;
+            for(TestCase result : tester.getResults())
+            {
+                System.out.println("Running Test " + ++testCount);
+                String[] arguments = result.getArguments();
+                System.out.print("Arguments : ");
+                
+                for(String argument : arguments)
+                    System.out.print(" " + argument);
+                
+                System.out.println();
+                if(result.getResult())
+                    System.out.println("Test Passed");
+                else
+                    System.out.println("Test Failed");
+                
+                System.out.println("Expected Output " + result.getOutput1());
+                System.out.println("Generated Output " + result.getOutput2());
+                if(result.getError().size() > 0)
+                    System.out.println("Error Message" + result.getError().toString());
+            }
             
         }
         else
