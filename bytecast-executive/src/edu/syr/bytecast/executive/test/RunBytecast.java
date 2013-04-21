@@ -7,6 +7,7 @@ package edu.syr.bytecast.executive.test;
 import edu.syr.bytecast.amd64.BytecastAMD64Factory;
 import edu.syr.bytecast.amd64.api.constants.IBytecastAMD64;
 import edu.syr.bytecast.executive.version.BytecastVersion;
+import edu.syr.bytecast.fsys.elf.ElfExeObjParser;
 import edu.syr.bytecast.interfaces.fsys.IBytecastFsys;
 import edu.syr.bytecast.jimple.api.IJimple;
 import edu.syr.bytecast.jimple.impl.Jimple;
@@ -41,9 +42,10 @@ public class RunBytecast {
         PrintStream newStream = new PrintStream(baos);
         System.setOut(newStream);
         try {
-            Paths.v().setRoot("../");
-            Paths.v().parsePathsFile("bytecast-executive/config/paths.cfg");
-            IBytecastFsys fsys = BytecastVersion.getFsys("product");
+            Paths.v().setRoot("../../");
+            Paths.v().parsePathsFile("bytecast-exec/bytecast-executive/config/paths.cfg");
+            //IBytecastFsys fsys = BytecastVersion.getFsys("product");
+            IBytecastFsys fsys = new ElfExeObjParser();
             //Have to Inject Product and Test Module here.
             IBytecastAMD64 amd64 = new BytecastAMD64Factory().createBytecastAMD64Builder(fsys, Paths.v().getPath(getInputProperty()));
             IJimple jimple = new Jimple();

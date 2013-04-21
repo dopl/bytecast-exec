@@ -18,37 +18,48 @@ import java.util.logging.Logger;
  */
 public class Tester {
   
-    private List<TestResult> m_testcases;
+    private List<TestCase> m_testcases;
     
     public Tester()
     {        
-       m_testcases = new ArrayList<TestResult>();
+       m_testcases = new ArrayList<TestCase>();
     }
     
-    public void addTestCase(String command1, String command2, String directory1, String directory2)
+    public void addTestCase(PocFile file, String[] arguments)
     {
-        TestResult m_result = new TestResult(command1, command2, directory1, directory2);
-        m_testcases.add(m_result);
+        TestCase m_testcase = new TestCase(file);
+        m_testcase.setArguments(arguments);
+        m_testcases.add(m_testcase);
     }
     
     public void startTest()
     {       
-        for(TestResult result : m_testcases)
+        for(TestCase testcase : m_testcases)
         {
             try {
-                RunProcess rp = new RunProcess();
-                String command1 = result.getcommand1();
-                String directory1 = result.getdirectory1();
-                rp.exec(command1, null, new File(directory1));
-                result.setOutput1(rp.getOutput());
+                StringBuilder command1 = new StringBuilder(testcase.getPocFile().getcommand1());
+                String[] arguments = testcase.getArguments();
+                command1.append(" ");
+                for(int i = 0; i < arguments.length; i++)
+                {
+                    command1.append(arguments[i]);
+                    command1.append(" ");
+                }
                 
+                RunProcess rp = new RunProcess();                
+                rp.exec(command1.toString(), new File(testcase.getPocFile().getdirectory1()));
+                testcase.setOutput1(rp.getOutput());
+                testcase.setError1(rp.getError());              
             } catch (IOException ex) {
                 Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Tester.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
     }
     
+    public List<TestCase> getResults()
+    {
+        return m_testcases;
+    }        
 }
