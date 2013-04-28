@@ -51,32 +51,41 @@ public class Tester {
             try {
                 String command1 = buildCommand(testcase.getPocFile().getcommand1(), testcase.getArguments());
                 RunProcess rp = new RunProcess();
-                rp.exec(command1.toString(), new File(testcase.getPocFile().getdirectory1()));
+                testcase.setReturn1(rp.exec(command1.toString(), new File(testcase.getPocFile().getdirectory1())));
                 testcase.setOutput1(rp.getOutput());
                 if(rp.getError().size() > 0)
                     testcase.add("error", rp.getError().toString());
                 String command2 = buildCommand(testcase.getPocFile().getcommand2(), testcase.getArguments());
                 RunProcess rp1 = new RunProcess();
-                rp1.exec(command2.toString(), new File(testcase.getPocFile().getdirectory2()));
+                testcase.setReturn2(rp1.exec(command2.toString(), new File(testcase.getPocFile().getdirectory2())));
                 testcase.setOutput2(rp1.getOutput());
-                if(rp.getError().size() > 0)
-                    testcase.add("error", rp1.getError().toString());
-                if(testcase.getOutput1().size() != testcase.getOutput2().size())
-                    testcase.setResult(false);
+                if(testcase.getReturn1() == testcase.getReturn2())
+                    testcase.setResult(true);
                 else
-                {
-                    int count = 0;
-                    boolean result = true;
-                    for(String output : testcase.getOutput1())
-                    {
-                        if(!output.equals(testcase.getOutput2().get(count++)))
-                        {
-                            result = false;
-                            break;
-                        }
-                    }
-                    testcase.setResult(result);                    
-                }
+                    testcase.setResult(false);
+               /*
+                * TODO : Compare the system outputs below
+                */                 
+//                if(rp.getError().size() > 0)
+//                    testcase.add("error", rp1.getError().toString());
+//                if(testcase.getOutput1().size() != testcase.getOutput2().size())
+//                    testcase.setResult(false);
+//                else
+//                {
+//                    int count = 0;
+//                    boolean result = true;
+//                    for(String output : testcase.getOutput1())
+//                    {
+//                        if(!output.equals(testcase.getOutput2().get(count++)))
+//                        {
+//                            result = false;
+//                            break;
+//                        }
+//                    }
+//                    testcase.setResult(result);                    
+//                }
+                
+                
                 
             } catch (IOException ex) {
                 testcase.add("error", ex.getMessage());

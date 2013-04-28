@@ -20,6 +20,8 @@ public class TestCase {
     private List<String> m_error;
     private String[] m_arguments;
     private PocFile m_pocFile;
+    private int return1;
+    private int return2;
     
     public TestCase()
     {
@@ -164,5 +166,33 @@ public class TestCase {
      */
     public void setPocFile(PocFile m_pocFile) {
         this.m_pocFile = m_pocFile;
+    }
+
+    /**
+     * @return the return1
+     */
+    public int getReturn1() {
+        return return1;
+    }
+
+    /**
+     * @param return1 the return1 to set
+     */
+    public void setReturn1(int return1) {
+        this.return1 = return1;
+    }
+
+    /**
+     * @return the return2
+     */
+    public int getReturn2() {
+        return return2;
+    }
+
+    /**
+     * @param return2 the return2 to set
+     */
+    public void setReturn2(int return2) {
+        this.return2 = return2;
     }
 }
