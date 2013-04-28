@@ -1,0 +1,86 @@
+public class output1 extends java.lang.Object
+{
+
+    void <init>()
+    {
+        output1 r0;
+
+        r0 := @this: output1;
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+        return;
+    }
+
+    public int sum(int, int)
+    {
+        output1 r0;
+        int l0, l1, v0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l1 := @parameter1: int;
+        l0 = l0 * 1;
+        v0 = l0 + l1;
+        return v0;
+    }
+
+    public int dostuff(int, int)
+    {
+        output1 r0;
+        int l0, l1, returnVal;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l1 := @parameter1: int;
+        if l0 >= l1 goto label0;
+
+        returnVal = virtualinvoke r0.<output1: int sum(int,int)>(l0, l1);
+        goto label1;
+
+     label0:
+        returnVal = virtualinvoke r0.<output1: int halve(int)>(l0);
+
+     label1:
+        return returnVal;
+    }
+
+    public int halve(int)
+    {
+        output1 r0;
+        int l0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l0 = l0 / 2;
+        return l0;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        int argc, returnVal;
+        java.lang.String[] argv;
+        output1 obj;
+        java.lang.String argv1, char_at, argv0;
+        char char10, char00;
+
+        argv := @parameter0: java.lang.String[];
+        obj = new output1;
+        specialinvoke obj.<output1: void <init>()>();
+        argc = lengthof argv;
+        if argc != 3 goto label0;
+
+        argv1 = argv[1];
+        char_at = argv1;
+        char10 = virtualinvoke char_at.<java.lang.String: char charAt(int)>(0);
+        argv0 = argv[0];
+        char_at = argv0;
+        char00 = virtualinvoke char_at.<java.lang.String: char charAt(int)>(0);
+        returnVal = virtualinvoke obj.<output1: int dostuff(int,int)>(char00, char10);
+        goto label1;
+
+     label0:
+        staticinvoke <java.lang.System: void exit(int)>(1);
+
+     label1:
+        staticinvoke <java.lang.System: void exit(int)>(0);
+    }
+}

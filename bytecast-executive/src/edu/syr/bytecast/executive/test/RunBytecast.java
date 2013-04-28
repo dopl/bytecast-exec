@@ -6,9 +6,12 @@ package edu.syr.bytecast.executive.test;
 
 import edu.syr.bytecast.amd64.BytecastAMD64Factory;
 import edu.syr.bytecast.amd64.api.constants.IBytecastAMD64;
+import edu.syr.bytecast.amd64.api.output.IExecutableFile;
 import edu.syr.bytecast.executive.version.BytecastVersion;
 import edu.syr.bytecast.fsys.elf.ElfExeObjParser;
 import edu.syr.bytecast.interfaces.fsys.IBytecastFsys;
+import edu.syr.bytecast.interfaces.interp.IBytecastInterp;
+import edu.syr.bytecast.interp.amd64.AMD64ExecutionEngine;
 import edu.syr.bytecast.jimple.api.IJimple;
 import edu.syr.bytecast.jimple.impl.Jimple;
 import edu.syr.bytecast.util.Paths;
@@ -26,15 +29,29 @@ public class RunBytecast {
     private boolean m_testFinished;
     private String m_inputProperty;
     private String m_outputFile;
+    private String[] args;
     
+    /*
+     * Constructor with property file and outputFile
+     */
     public RunBytecast(String inputProperty, String outputFile)
     {
         this.m_inputProperty = inputProperty;
         this.m_outputFile = outputFile;
         m_testFinished = false;
-    }
-       
+    }    
     
+    public RunBytecast(String inputProperty, String outputFile, String[] args)
+    {
+        this.m_inputProperty = inputProperty;
+        this.m_outputFile = outputFile;
+        this.args = args;
+        m_testFinished = false;       
+    }    
+    
+    /*
+     * Start running with Jimple
+     */
     public void start()
     {     
         PrintStream old = System.out;
@@ -50,7 +67,7 @@ public class RunBytecast {
             IBytecastAMD64 amd64 = new BytecastAMD64Factory().createBytecastAMD64Builder(fsys, Paths.v().getPath(getInputProperty()));
             IJimple jimple = new Jimple();
             //Should create the jar path here.
-            if(jimple.createJimple(amd64, getOutputFile()))
+            if(jimple.createJimple(amd64, getOutputFile(), "jimple"))
                 m_result = true;
             else
                 m_result = false;
@@ -64,7 +81,39 @@ public class RunBytecast {
             System.setOut(old);
         }
     }
-
+    
+    /*
+     * Start running with Interpreter
+     */
+    public void startWithInterpret()
+    {
+        PrintStream old = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream newStream = new PrintStream(baos);
+        System.setOut(newStream);
+        try {
+            Paths.v().setRoot("../../");
+            Paths.v().parsePathsFile("bytecast-exec/bytecast-executive/config/paths.cfg");
+            //IBytecastFsys fsys = BytecastVersion.getFsys("product");
+            IBytecastFsys fsys = new ElfExeObjParser();
+            //Have to Inject Product and Test Module here.
+            IBytecastAMD64 amd64 = new BytecastAMD64Factory().createBytecastAMD64Builder(fsys, Paths.v().getPath(getInputProperty()));
+            IExecutableFile m_exec = amd64.buildInstructionObjects();
+            IBytecastInterp interpret = new AMD64ExecutionEngine();
+            interpret.runProgram(m_exec, args);
+            
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            m_result = false;
+        } finally
+        {
+            m_testFinished = true;
+            setMessage(baos.toString());
+            System.setOut(old);
+        }      
+    }
+    
     /**
      * @return the message
      */

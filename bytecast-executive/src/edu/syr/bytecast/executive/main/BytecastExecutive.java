@@ -20,19 +20,19 @@ public class BytecastExecutive {
         
     }        
     
-     
     public static void main(String[] args) {        
-        RunBytecast m_tester1 = new RunBytecast("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "outputjar/output1.class");
+        
+        RunBytecast m_tester1 = new RunBytecast("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "output1");
         m_tester1.start();
         
-        RunBytecast m_tester2 = new RunBytecast("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "outputjar/output2.class");
-        m_tester2.start();
+        RunBytecast m_tester2 = new RunBytecast("BYTECAST_TEST_FSYS_POC3_TEST_ELF_FILE", "output2");
+        //m_tester2.start();
         
         if(m_tester1.isResult())
         {
             System.out.println("Succesfully Created Class File for Test 1");            
             Tester tester = new Tester();            
-            PocFile pocfile = new PocFile("./a.out", "java output1", "../../bytecast-documents/AsciiManip01Prototype", "outputjar/output1.class");
+            PocFile pocfile = new PocFile("./a.out", "java output1", "../../bytecast-documents/AsciiManip01Prototype", "sootOutput");
             tester.addTestCase(pocfile, new String[]{"2", "3"});
             tester.addTestCase(pocfile, new String[]{"2", "2"});
             tester.addTestCase(pocfile, new String[]{"4", "5"});
@@ -56,8 +56,8 @@ public class BytecastExecutive {
                 else
                     System.out.println("Test Failed");
                 
-                System.out.println("Expected Output " + result.getOutput1());
-                System.out.println("Generated Output " + result.getOutput2());
+                System.out.println("Expected Output " + result.getReturn1());
+                System.out.println("Generated Output " + result.getReturn2());
                 if(result.getError().size() > 0)
                     System.out.println("Error Message" + result.getError().toString());
             }
@@ -73,7 +73,7 @@ public class BytecastExecutive {
         {
             System.out.println("Succesfully Created Class File for Test 2");            
             Tester tester = new Tester();  
-            PocFile pocfile2 = new PocFile("./a.out", "java output2", "../../bytecast-documents/AsciiManip01Prototype", "outputjar/output2.class");
+            PocFile pocfile2 = new PocFile("./a.out", "java output2", "../../bytecast-documents/AsciiManip02Prototype", "sootOutput");
             tester.addTestCase(pocfile2, new String[]{"2", "3"});
             tester.addTestCase(pocfile2, new String[]{"2", "2"});
             tester.addTestCase(pocfile2, new String[]{"4", "5"});
