@@ -22,7 +22,7 @@ public class BytecastExecutive {
     
     public static void main(String[] args) {        
         
-        RunBytecast m_tester1 = new RunBytecast("BYTECAST_TEST_FSYS_SIMPLE_TEST_ELF_FILE", "output1");
+        RunBytecast m_tester1 = new RunBytecast("BYTECAST_TEST_FSYS_POC3_TEST_ELF_FILE", "output1");
         m_tester1.start();
         
 //        RunBytecast m_tester2 = new RunBytecast("BYTECAST_TEST_FSYS_POC3_TEST_ELF_FILE", "output2");
@@ -32,7 +32,7 @@ public class BytecastExecutive {
         {
             System.out.println("Succesfully Created Class File for Test 1");            
             Tester tester = new Tester();            
-            PocFile pocfile = new PocFile("./a.out", "java output1", "../../bytecast-documents/AsciiManip01Prototype", "sootOutput");
+            PocFile pocfile = new PocFile("./a.out", "java output1", "../../bytecast-documents/AsciiManip02Prototype", "sootOutput");
             tester.addTestCase(pocfile, new String[]{"2", "3"});
             tester.addTestCase(pocfile, new String[]{"2", "2"});
             tester.addTestCase(pocfile, new String[]{"4", "5"});
