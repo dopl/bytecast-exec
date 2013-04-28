@@ -10,19 +10,6 @@ public class output1 extends java.lang.Object
         return;
     }
 
-    public int sum(int, int)
-    {
-        output1 r0;
-        int l0, l1, v0;
-
-        r0 := @this: output1;
-        l0 := @parameter0: int;
-        l1 := @parameter1: int;
-        l0 = l0 * 1;
-        v0 = l0 + l1;
-        return v0;
-    }
-
     public int dostuff(int, int)
     {
         output1 r0;
@@ -41,17 +28,6 @@ public class output1 extends java.lang.Object
 
      label1:
         return returnVal;
-    }
-
-    public int halve(int)
-    {
-        output1 r0;
-        int l0;
-
-        r0 := @this: output1;
-        l0 := @parameter0: int;
-        l0 = l0 / 2;
-        return l0;
     }
 
     public static void main(java.lang.String[])
@@ -79,8 +55,34 @@ public class output1 extends java.lang.Object
 
      label0:
         staticinvoke <java.lang.System: void exit(int)>(1);
+        return;
 
      label1:
         staticinvoke <java.lang.System: void exit(int)>(0);
+        return;
+    }
+
+    public int halve(int)
+    {
+        output1 r0;
+        int l0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l0 = l0 / 2;
+        return l0;
+    }
+
+    public int sum(int, int)
+    {
+        output1 r0;
+        int l0, l1, v0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l1 := @parameter1: int;
+        l0 = l0 * 1;
+        v0 = l0 + l1;
+        return v0;
     }
 }

@@ -67,7 +67,7 @@ public class RunBytecast {
             IBytecastAMD64 amd64 = new BytecastAMD64Factory().createBytecastAMD64Builder(fsys, Paths.v().getPath(getInputProperty()));
             IJimple jimple = new Jimple();
             //Should create the jar path here.
-            if(jimple.createJimple(amd64, getOutputFile(), "jimple"))
+            if(jimple.createJimple(amd64, getOutputFile(), "class"))
                 m_result = true;
             else
                 m_result = false;
