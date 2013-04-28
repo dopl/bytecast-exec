@@ -23,7 +23,20 @@ public class TestCase {
     
     public TestCase()
     {
-        m_error = new ArrayList<String>();        
+        m_error = new ArrayList<String>()
+        {
+
+            @Override
+            public String toString() {
+                StringBuilder buff = new StringBuilder();
+                for(String value : this)
+                {
+                    buff.append(value).append(",");
+                }
+                
+                return buff.toString();
+            }            
+        };  
     }
     
     public void add(String type, String message)
@@ -40,7 +53,20 @@ public class TestCase {
     public TestCase(PocFile m_pocFile)
     {
         this.m_pocFile = m_pocFile;
-        m_error = new ArrayList<String>();
+        m_error = new ArrayList<String>()
+        {
+
+            @Override
+            public String toString() {
+                StringBuilder buff = new StringBuilder();
+                for(String value : this)
+                {
+                    buff.append(value).append(",");
+                }
+                
+                return buff.toString();
+            }            
+        };
     }
        
     /**
