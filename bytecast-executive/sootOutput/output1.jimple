@@ -10,6 +10,19 @@ public class output1 extends java.lang.Object
         return;
     }
 
+    public int sum(int, int)
+    {
+        output1 r0;
+        int l0, l1, v0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l1 := @parameter1: int;
+        l0 = l0 * 1;
+        v0 = l0 + l1;
+        return v0;
+    }
+
     public int dostuff(int, int)
     {
         output1 r0;
@@ -30,6 +43,17 @@ public class output1 extends java.lang.Object
         return returnVal;
     }
 
+    public int halve(int)
+    {
+        output1 r0;
+        int l0;
+
+        r0 := @this: output1;
+        l0 := @parameter0: int;
+        l0 = l0 / 2;
+        return l0;
+    }
+
     public static void main(java.lang.String[])
     {
         int argc, returnVal;
@@ -42,7 +66,7 @@ public class output1 extends java.lang.Object
         obj = new output1;
         specialinvoke obj.<output1: void <init>()>();
         argc = lengthof argv;
-        if argc != 3 goto label0;
+        if argc != 2 goto label0;
 
         argv1 = argv[1];
         char_at = argv1;
@@ -60,29 +84,5 @@ public class output1 extends java.lang.Object
      label1:
         staticinvoke <java.lang.System: void exit(int)>(0);
         return;
-    }
-
-    public int halve(int)
-    {
-        output1 r0;
-        int l0;
-
-        r0 := @this: output1;
-        l0 := @parameter0: int;
-        l0 = l0 / 2;
-        return l0;
-    }
-
-    public int sum(int, int)
-    {
-        output1 r0;
-        int l0, l1, v0;
-
-        r0 := @this: output1;
-        l0 := @parameter0: int;
-        l1 := @parameter1: int;
-        l0 = l0 * 1;
-        v0 = l0 + l1;
-        return v0;
     }
 }
